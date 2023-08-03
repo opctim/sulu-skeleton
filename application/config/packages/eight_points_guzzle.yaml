@@ -1,0 +1,17 @@
+# EightPoints GuzzleBundle
+# A full list of configuration options can be found here:
+# https://github.com/8p/EightPointsGuzzleBundle/blob/master/src/Resources/doc/configuration-reference.md
+eight_points_guzzle:
+    clients:
+        mollie:
+            lazy: false
+            plugin: ~
+            options:
+                timeout: 30
+
+        mollie_images:
+            lazy: false
+            plugin: ~
+            options:
+                timeout: 30
+                http_errors: true

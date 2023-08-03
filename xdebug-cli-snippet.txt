@@ -1,0 +1,1 @@
+PHP_IDE_CONFIG="serverName=<PHPSTORM RUN CONFIG NAME>" php -dxdebug.idekey=PHPSTORM -dxdebug.start_with_request=yes

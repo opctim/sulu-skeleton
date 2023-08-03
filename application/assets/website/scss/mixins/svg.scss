@@ -1,0 +1,8 @@
+@mixin svg-load(
+    $title,
+    $url
+) {
+    @svg-load #{$title} #{url($url)} {
+        @content;
+    }
+}

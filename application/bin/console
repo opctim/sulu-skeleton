@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+$a = 1;
+
+$websiteWhiteListRegEx = '/^(app|messenger):/';
+
+$commandName = (string)($argv[1] ?? '');
+
+if (preg_match($websiteWhiteListRegEx, $commandName)) {
+    $suluContext = 'website';
+}
+
+return include __DIR__ . DIRECTORY_SEPARATOR. 'console.php';

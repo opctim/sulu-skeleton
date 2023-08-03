@@ -1,0 +1,93 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark text-bg-primary bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" aria-label="{{ 'homepage'|trans }}" href="{{ sulu_content_root_path() }}">
+            Logo
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="{{ 'toggle-nav'|trans }}"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{{ sulu_content_root_path() }}"
+                        title="{{ 'homepage'|trans }}"
+                    >{{ 'homepage'|trans }}</a>
+                </li>
+
+                {% for item in sulu_navigation_root_tree('main', 2) %}
+                    {# @var item \Sulu\Bundle\WebsiteBundle\Navigation\NavigationItem #}
+                    <li class="nav-item{{ item.children|length > 0 ? ' dropdown' : '' }}">
+                        {% if item.children|length > 0 %}
+                            <a
+                                id="dropdown-{{ item.id }}"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                title="{{ item.title }}"
+                            >{{ item.title }}</a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-{{ item.id }}">
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="{{ sulu_content_path(item.url) }}"
+                                        title="{{ item.title }}"
+                                    >
+                                        {{ item.title }}
+                                    </a>
+                                </li>
+
+                                <li><hr class="dropdown-divider"></li>
+
+                                {% for child in item.children %}
+                                    {# @var child \Sulu\Bundle\WebsiteBundle\Navigation\NavigationItem#}
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ sulu_content_path(child.url) }}"
+                                            title="{{ child.title }}"
+                                        >
+                                            {{ child.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <li>
+                                <a
+                                    class="nav-link"
+                                    href="{{ sulu_content_path(item.url) }}"
+                                    title="{{ item.title }}"
+                                >
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <form class="d-flex" action="{{ path('sulu_search.website_search') }}" method="GET">
+                <input class="form-control me-2" name="q" type="text" placeholder="{{ 'search'|trans }}" title="{{ 'search'|trans }}" />
+
+                <button class="btn btn-outline-light" type="submit">{{ 'go'|trans }}</button>
+            </form>
+
+        </div>
+    </div>
+</nav>

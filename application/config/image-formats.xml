@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formats xmlns="http://schemas.sulu.io/media/formats"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://schemas.sulu.io/media/formats http://schemas.sulu.io/media/formats-1.1.xsd">
+
+    <!-- See: http://docs.sulu.io/en/latest/book/image-formats.html how to define image-formats -->
+
+    <!--
+    <format key="300x">
+        <meta>
+            <title lang="en">Example Image</title>
+            <title lang="de">Beispielbild</title>
+        </meta>
+
+        <scale x="300"/>
+    </format>
+    -->
+
+    <!--
+    Render an image from the media_selection in a specific format the following way:
+
+    <img src="{{ image.thumbnails['300x'] }}" alt="{{ image.title }}" title="{{ image.description|default(image.title) }}">
+    -->
+
+    <!-- Remove unused: bin/websiteconsole sulu:media:format:cache:cleanup -->
+    <!-- Regenerate: bin/websiteconsole sulu:media:regenerate-formats -->
+    <!-- Clear all generated: bin/websiteconsole sulu:media:format:cache:clear -->
+
+    <!-- stage module START -->
+    <format key="2560x660">
+        <meta>
+            <title lang="de">Stage extra-large retina</title>
+        </meta>
+
+        <scale x="2560" y="660" />
+    </format>
+
+    <format key="2560x860">
+        <meta>
+            <title lang="de">Stage large retina</title>
+        </meta>
+
+        <scale x="2560" y="860" />
+    </format>
+
+    <format key="1280x620">
+        <meta>
+            <title lang="de">Stage medium retina</title>
+        </meta>
+
+        <scale x="1280" y="620" />
+    </format>
+
+    <format key="640x427">
+        <meta>
+            <title lang="de">Stage small retina</title>
+        </meta>
+
+        <scale x="640" y="427" />
+    </format>
+    <!-- stage module END -->
+
+
+    <!-- image-text, concerts & member module START -->
+    <format key="750x500">
+        <meta>
+            <title lang="de">Konzerte / Bild-Text &amp; Mitglieder large</title>
+        </meta>
+
+        <scale x="750" y="500"/>
+    </format>
+
+    <format key="600x400">
+        <meta>
+            <title lang="de">Konzerte / Bild-Text &amp; Mitglieder medium</title>
+        </meta>
+
+        <scale x="600" y="400"/>
+    </format>
+
+    <format key="360x240">
+        <meta>
+            <title lang="de">Konzerte / Bild-Text &amp; Mitglieder small</title>
+        </meta>
+
+        <scale x="360" y="240"/>
+    </format>
+    <!-- image-text, concerts & member module END -->
+
+
+    <!-- gallery module START -->
+    <format key="450x450">
+        <meta>
+            <title lang="de">Galerie Vorschau large</title>
+        </meta>
+
+        <scale x="450" y="450" />
+    </format>
+
+    <format key="250x250">
+        <meta>
+            <title lang="de">Galerie Vorschau small</title>
+        </meta>
+
+        <scale x="250" y="250" />
+    </format>
+
+    <format key="1920x1200">
+        <meta>
+            <title lang="de">Galerie Vollbild</title>
+        </meta>
+
+        <scale x="1920" y="1200" mode="inset" />
+    </format>
+    <!-- gallery module END -->
+
+    <!-- concert teaser module START -->
+    <format key="2560x350">
+        <meta>
+            <title lang="de">Konzert-Teaser extra-large</title>
+        </meta>
+
+        <scale x="2560" y="350" />
+    </format>
+    <format key="2560x450">
+        <meta>
+            <title lang="de">Konzert-Teaser large</title>
+        </meta>
+
+        <scale x="2560" y="450" />
+    </format>
+    <format key="1280x300">
+        <meta>
+            <title lang="de">Konzert-Teaser medium</title>
+        </meta>
+
+        <scale x="1280" y="300" />
+    </format>
+    <format key="640x350">
+        <meta>
+            <title lang="de">Konzert-Teaser small</title>
+        </meta>
+
+        <scale x="640" y="350" />
+    </format>
+    <!-- concert teaser module END -->
+
+
+    <format key="1280x720">
+        <meta>
+            <title lang="de">Social-Media Sharing Image (OG-Image)</title>
+        </meta>
+
+        <scale x="1280" y="720" />
+    </format>
+</formats>

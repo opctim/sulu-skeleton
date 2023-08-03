@@ -1,0 +1,9 @@
+sulu_form:
+    csrf_protection: true # requires additional changes see: https://github.com/sulu/SuluFormBundle/blob/2.4.0/Resources/doc/csrf.md
+    mail:
+        from: "%env(MAIL_SENDER_ADDRESS)%"
+        to: "%env(SULU_ADMIN_EMAIL)%"
+        sender: "%env(MAIL_SENDER_ADDRESS)%"
+        helper: "mailer"
+    media:
+        protected: true

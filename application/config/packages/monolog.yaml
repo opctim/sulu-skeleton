@@ -1,0 +1,67 @@
+monolog:
+    channels:
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+
+when@dev:
+    monolog:
+        handlers:
+            main:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                channels: ["!event"]
+            # uncomment to get logging in your browser
+            # you may have to allow bigger header sizes in your Web server configuration
+            #firephp:
+            #    type: firephp
+            #    level: info
+            #chromephp:
+            #    type: chromephp
+            #    level: info
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine", "!console"]
+
+when@test:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                excluded_http_codes: [404, 405]
+                channels: ["!event"]
+            nested:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+
+when@prod: &prod
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                handler: grouped
+                excluded_http_codes: [403, 404, 401]
+            grouped:
+                type: group
+                members: [ streamed, deduplicated ]
+            streamed:
+                type: rotating_file
+                path: '%kernel.logs_dir%/%kernel.environment%.log'
+                level: info
+                max_files: 10
+            deduplicated:
+                type: deduplication
+                handler: symfony_mailer
+            symfony_mailer:
+                type: symfony_mailer
+                from_email: '%env(MAIL_SENDER_ADDRESS)%'
+                to_email: '%env(SULU_ADMIN_EMAIL)%'
+                subject: 'An Error Occurred! %%message%%'
+                level: emergency
+                formatter: monolog.formatter.html
+                content_type: text/html
+
+when@stage: *prod

@@ -1,0 +1,166 @@
+---
+- name: "BUILD | Sulu"
+  hosts: 127.0.0.1
+  connection: local
+  vars:
+      workspace: "{{playbook_dir}}/.."
+  tasks:
+    - name: set configuration file
+      shell: |
+        cd {{workspace}}/application
+        mv .env.prod env
+        rm -rf .env*
+        mv env .env
+
+    - name: build backend on localhost (composer install)
+      shell: |
+        cd {{workspace}}/application
+        composer install --no-scripts
+
+    - name: build frontend on localhost
+      shell: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+        cd {{workspace}}/application
+        nvm install
+        npm ci
+        npm run build
+      when: build_frontend|bool
+
+    - debug:
+        msg: "Skipping the build frontend task"
+      when: not build_frontend|bool
+
+    - name: decrypt secrets to local vault
+      shell: |
+        cd {{workspace}}/application
+        APP_RUNTIME_ENV=prod php bin/console secrets:decrypt-to-local --force
+
+
+- name: "DEPLOY | Sulu"
+  hosts: production
+  vars:
+    base_dir: "/var/www/www.somedomain.de"
+    deploy_dir: "{{base_dir}}/deploy"
+    webroot: "{{base_dir}}/releases/{{version}}"
+    sulu_storage: "/PUTPATHHERE"
+    workspace: "{{playbook_dir}}/.."
+  serial: 1
+  roles: []
+  pre_tasks:
+    - name: wait for sessions
+      retries: 5
+      delay: 2
+      shell: "sleep 0"
+  tasks:
+    - name: create deployment directory
+      file:
+        path: "{{deploy_dir}}"
+        recurse: true
+        state: directory
+
+    - name: transfer data to server
+      synchronize:
+        src: "../application/"
+        dest: "{{deploy_dir}}"
+        checksum: yes
+        delete: yes
+        recursive: true
+        rsync_opts:
+          - "--exclude=*DS_Store"
+          - "--exclude=*.git/"
+          - "--exclude=*/node_modules/"
+          - "--exclude=var/cache/"
+          - "--exclude=config/secrets/dev/"
+          - "--exclude=var/log/"
+          - "--exclude=*Makefile"
+          - "--exclude=deptrac.phar"
+          - "--exclude=depfile.yml"
+          - "--exclude=.php-cs-fixer.dist.php"
+          - "--exclude=mysql-tunnel.sh"
+          - "--exclude=package.json"
+          - "--exclude=package-lock.json"
+          - "--exclude=phpstan.neon"
+          - "--exclude=phpunit.xml"
+          - "--exclude=postcss.config.js"
+          - "--exclude=tsconfig.node.json"
+          - "--exclude=tsconfig.json"
+          - "--exclude=webpack.config.js"
+          - "--delete-excluded"
+
+    - name: copy deployed files to release directory
+      shell: "cp -R {{deploy_dir}} {{webroot}}"
+
+    - name: create cache directory
+      file:
+        path: "{{webroot}}/var/cache"
+        state: directory
+
+    - name: create logs directory
+      file:
+        path: "{{webroot}}/var/log"
+        state: directory
+
+    - name: set storage symlink
+      shell: |
+        rm -rf {{webroot}}/public/uploads
+        ln -sfn {{sulu_storage}} {{webroot}}/public/uploads
+
+    - name: migrate script
+      shell: |
+        cd {{webroot}}/ 
+        php bin/console do:mi:mi -q || true
+        php bin/adminconsole sulu:document:initialize
+      run_once: true
+
+    - name: rebuild index
+      shell: |
+        cd {{webroot}}/ 
+        php bin/websiteconsole massive:search:reindex
+      run_once: true
+
+    - name: warmup cache
+      shell: |
+        cd {{webroot}}/ 
+        rm -rf var/cache/*
+        php bin/console cache:warmup --env=prod
+
+    - name: stop workers
+      shell: |
+        cd {{webroot}}/ 
+        php bin/console messenger:stop-workers
+
+    - name: restart worker service
+      shell: |
+        systemctl --user restart ticketshop-worker
+
+    - name: install assets
+      shell: |
+        cd {{webroot}}/ 
+        php bin/console assets:install
+
+    - name: set permissions
+      shell: |
+        cd {{webroot}}/
+        mkdir public/mollie-icons
+        chown -Rf banana:webrights *
+        chmod -Rf 775 *
+        setfacl -dR -m u:www-data:rwX -m u:banana:rwX var
+        setfacl -R -m u:www-data:rwX -m u:banana:rwX var
+        setfacl -dR -m u:www-data:rwX -m u:banana:rwX public/mollie-icons
+        setfacl -R -m u:www-data:rwX -m u:banana:rwX public/mollie-icons
+
+  post_tasks:
+    - name: tidy up old releases
+      shell: |
+        bash -c 'cd {{base_dir}}/releases/ && ls -t | tail -n +7 | xargs --no-run-if-empty rm -r --preserve-root'
+
+    - name: symlink
+      shell: |
+        ln -sfn {{webroot}} {{base_dir}}/releases/current
+
+    - name: reset opcache
+      shell: |
+        sudo cachetool opcache:reset

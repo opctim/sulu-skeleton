@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+
+    <meta property="og:title" content="{{ content.title|striptags }}" />
+    <meta property="og:description" content="{{ content.sub_title|striptags }}" />
+
+    <meta property="og:url" content="{{ app.request.uri }}" />
+    <meta property="og:type" content="website" />
+
+    {% set image = content.stage_images[0].formats['1280x720'] | default(false) %}
+
+    {% if image != false %}
+        {% set image = app.request.getBaseURL() ~ image %}
+    {% endif %}
+
+    <meta property="og:image" content="{{ image | default('') }}" />
+
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+
+    <meta property="og:locale" content="de_DE" />
+{% endblock %}

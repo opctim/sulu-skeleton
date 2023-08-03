@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<properties xmlns="http://schemas.sulu.io/template/template"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <block name="modules" default-type="snippet">
+        <types>
+            <type name="snippet">
+                <meta>
+                    <title lang="de">Schnipsel</title>
+                </meta>
+
+                <properties>
+                    <property name="snippet" type="single_snippet_selection">
+                        <meta>
+                            <title lang="de">Schnipsel</title>
+                        </meta>
+
+                        <params>
+                            <param name="types" value="default" />
+                            <param name="loadExcerpt" value="true" />
+                        </params>
+                    </property>
+                </properties>
+            </type>
+        </types>
+    </block>
+</properties>
+
+

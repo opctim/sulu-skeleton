@@ -1,0 +1,13 @@
+
+###> symfony/framework-bundle ###
+/application/.env.local
+/application/.env.local.php
+/application/.env.*.local
+/application/config/secrets/prod/prod.decrypt.private.php
+/application/public/bundles/
+/application/var/
+/application/vendor/
+###< symfony/framework-bundle ###
+
+.idea
+.idea/*

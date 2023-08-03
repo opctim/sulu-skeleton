@@ -1,0 +1,28 @@
+go: Los
+search: Suchen
+homepage: Startseite
+months: "{1}Ein Monat|[1,Inf]%num% Monate"
+years: "{1}Ein Jahr|[1,Inf]%num% Jahre"
+days: "{1}Ein Tag|[1,Inf]%num% Tage"
+toggle-nav: Navigation umschalten
+cmp-title: Wir nutzen Cookies!
+cmp-title-cookie-usage: Cookie-Nutzung
+cmp-intro: Diese Website verwendet Cookies, um ihren ordnungsgemäßen Betrieb zu gewährleisten und um zu verstehen, wie Sie mit ihr interagieren. <a aria-label="Datenschutzbestimmungen" class="cc-link" href="/datenschutz">Mehr lesen</a>
+cmp-intro-short: Wir verwenden Cookies, um die grundlegenden Funktionen der Website zu gewährleisten und um Ihr Online-Erlebnis zu verbessern.
+cmp-accept-all: Alle akzeptieren
+cmp-reject-all: Alle ablehnen
+cmp-settings: Einstellungen
+cmp-cookie-settings: Cookie Einstellungen
+cmp-save-settings: Einstellungen speichern
+cmp-title-name: Name
+cmp-title-domain: Domain
+cmp-title-expiry: Ablauf
+cmp-title-description: Beschreibung
+cmp-title-type: Typ
+cmp-essential-cookies: Zwingend erforderliche Cookies
+cmp-essential-cookies-description: Diese Cookies sind für die Funktion der Webseite zwingend erforderlich.
+cmp-phpsessid-cookie-description: Die Webseite nutzt diesen Cookie, um die Funktionalität des Bestellprozesses und von Eingaben des Nutzers zu ermöglichen.
+cmp-cc-cookie-description: Die Webseite nutzt diesen Cookie, um Ihre Cookie-Einstellungen zu speichern.
+cmp-permanent-cookie: Permanenter Cookie
+cmp-analysis-cookies-title: Analyse-Cookies
+cmp-analysis-cookies-description: Diese Cookies sammeln Informationen darüber, wie Sie die Website nutzen, welche Seiten Sie besucht und welche Links Sie angeklickt haben. Alle Daten sind anonymisiert und können nicht dazu verwendet werden, Sie zu identifizieren.

@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    {% if hits|length == 1 %}
+        {% set search_text = '1 Ergebnis für "' ~ query ~ '"' %}
+    {% else %}
+        {% set search_text = hits|length ~ ' Ergebnisse für "' ~ query ~ '"' %}
+    {% endif %}
+
+    <div class="container">
+        <ul>
+            {% for i, hit in hits %}
+                <li>
+                    <a href="{{ hit.document.url }}">
+                        {{- hit.document.title -}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

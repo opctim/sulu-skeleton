@@ -1,0 +1,30 @@
+<div class="container">
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            {% for item in sulu_navigation_root_flat('footer') %}
+                <li class="nav-item">
+                    {% if item.nodeType == constant('Sulu\\Component\\Content\\Compat\\Structure::NODE_TYPE_EXTERNAL_LINK') %}
+                        <a
+                            href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
+                            target="_blank"
+                            title="{{ item.title }}"
+                            class="nav-link px-2 text-muted"
+                        >
+                            {{ item.title }}
+                        </a>
+                    {% else %}
+                        <a
+                            href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
+                            title="{{ item.title }}"
+                            class="nav-link px-2 text-muted"
+                        >
+                            {{ item.title }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="text-center text-muted">© {{ 'now'|date('Y') }}</p>
+    </footer>
+</div>

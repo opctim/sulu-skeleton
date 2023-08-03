@@ -1,0 +1,18 @@
+{% extends "pages/page_base.html.twig" %}
+
+{% block content %}
+    <div class="container">
+        {% if content.form %}
+            {% if app.request.get('send') == 'true' %}
+                <div class="alert alert-success mb-5" role="alert">
+                    {{ view.form.entity.successText|raw|striptags }}
+                </div>
+            {% endif %}
+
+            {# FORM THEME #}
+            {% form_theme content.form 'form/sulu_forms.html.twig' %}
+
+            {{ form(content.form) }}
+        {% endif %}
+    </div>
+{% endblock %}

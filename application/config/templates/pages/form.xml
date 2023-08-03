@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>form</key>
+
+    <view>pages/form</view>
+    <controller>App\Controller\Website\ModuleController::indexAction</controller>
+    <cacheLifetime>1209600</cacheLifetime>
+
+    <meta>
+        <title lang="de">Formular</title>
+    </meta>
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="de">Titel</title>
+            </meta>
+            <params>
+                <param name="headline" value="true"/>
+            </params>
+
+            <tag name="sulu.rlp.part"/>
+            <tag name="sulu.search.field" role="title" />
+        </property>
+
+        <property name="sub_title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="de">Untertitel</title>
+            </meta>
+
+            <tag name="sulu.search.field" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title lang="de">URL</title>
+            </meta>
+
+            <tag name="sulu.rlp"/>
+        </property>
+
+        <property name="stage_images" type="media_selection" mandatory="true">
+            <meta>
+                <title lang="de">Titelbilder</title>
+            </meta>
+
+            <params>
+                <param name="types" value="image"/>
+            </params>
+
+            <tag name="sulu.search.field" role="image" index="false" />
+        </property>
+
+        <property name="form" type="single_form_selection">
+            <meta>
+                <title lang="de">Formular</title>
+            </meta>
+
+            <params>
+                <param name="resourceKey" value="page"/>
+            </params>
+        </property>
+    </properties>
+</template>

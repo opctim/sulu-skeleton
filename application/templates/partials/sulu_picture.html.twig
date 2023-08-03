@@ -1,0 +1,48 @@
+{#
+    EXAMPLE USAGE:
+
+    {% include 'partials/sulu_picture.html.twig' with {
+        class: 'd-block w-100 rounded',
+        image: image,
+        displayOption: module_view.images.displayOption|default(null),
+        formats: {
+            lg: '750x500',
+            md: '750x500',
+            sm: '600x400'
+        }
+    } %}
+
+#}
+
+<picture>
+    {% if formats.xl is defined %}
+        <source
+            media="(min-width: 1650px)"
+            srcset="{{ image.formats[ formats.xl ~ '.webp' ]|default('') }}"
+        />
+    {% endif %}
+
+    {% if formats.lg is defined %}
+        <source
+            media="(min-width: 1400px)"
+            srcset="{{ image.formats[ formats.lg ~ '.webp' ]|default('') }}"
+        />
+    {% endif %}
+
+    {% if formats.md is defined %}
+        <source
+            media="(min-width: 768px)"
+            srcset="{{ image.formats[ formats.md ~ '.webp' ]|default('') }}"
+        />
+    {% endif %}
+
+    <source
+        srcset="{{ image.formats[ formats.sm ~ '.webp' ]|default('') }}"
+    />
+
+    <img
+        src="{{ image.formats[ formats.sm ~ '.webp' ]|default('') }}"
+        alt="{{ image.description|default( image.title|default('') ) }}"
+        class="{{ class|default('') }} s-picture display-{{ displayOption|default('center') }}"
+    />
+</picture>

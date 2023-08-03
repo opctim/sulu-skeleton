@@ -1,0 +1,11 @@
+{% if module is defined %}
+    {% for module in module.snippet.modules %}
+        {{ include('modules/' ~ module.type ~ '.html.twig', { module: module, module_view: module_view.snippet.modules[loop.index0] }) }}
+    {% endfor %}
+{% else %}
+    <div class="modules">
+        {% for module in content.modules %}
+            {{ include('modules/' ~ module.type ~ '.html.twig', { module: module, module_view: view.modules[loop.index0] }) }}
+        {% endfor %}
+    </div>
+{% endif %}
