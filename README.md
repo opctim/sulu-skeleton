@@ -28,11 +28,12 @@ This Sulu CMS skeleton is the perfect way to decrease your initial setup time dr
 ## Setup
 
 1. In your project root, open the `.env` file and set all parameters to your liking.
-2. Go to `application/config/webspaces/default.xml` and make a few changes:
+2. If you change the database name or password, you'll have to change that in `application/.env` as well. See parameter `DATABASE_URL`.  
+3. Go to `application/config/webspaces/default.xml` and make a few changes:
    1. Rename the file to customize the webspace name. (e.g. mycompany.xml)
    2. Open the file and change `<name>` to some label and set `<key>` to the same value as the file name. (Marked with TODO)
    3. Scroll down and look for "portals". You'll see one domain for each environment. Set the local domain to the same as you set in your .env file before.
-3. Run `make setup` to initialize the database, build the backend and the frontend.
+4. Run `make setup` to initialize the database, build the backend and the frontend.
 
 ## Ansible
 
