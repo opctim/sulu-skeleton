@@ -4,10 +4,8 @@
           xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
     <!-- See: http://docs.sulu.io/en/latest/book/webspaces.html how to configure your webspace-->
 
-    <!-- TODO CONFIGURE THIS -->
-
-    <name>Default</name>
-    <key>default</key>
+    <name>Default</name><!-- TODO CONFIGURE THIS -->
+    <key>default</key><!-- TODO CONFIGURE THIS -->
 
     <localizations>
         <!-- See: http://docs.sulu.io/en/latest/book/localization.html how to add new localizations -->
@@ -52,12 +50,12 @@
             <environments>
                 <environment type="prod">
                     <urls>
-                        <url language="de">www.somedomain.de</url>
+                        <url language="de">www.somedomain.de</url><!-- TODO CONFIGURE THIS -->
                     </urls>
                 </environment>
                 <environment type="dev">
                     <urls>
-                        <url language="de">www.somedomain.local</url>
+                        <url language="de">www.somedomain.local</url><!-- TODO CONFIGURE THIS -->
                     </urls>
                 </environment>
             </environments>

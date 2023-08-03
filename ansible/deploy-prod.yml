@@ -42,10 +42,10 @@
 - name: "DEPLOY | Sulu"
   hosts: production
   vars:
-    base_dir: "/var/www/www.somedomain.de"
+    base_dir: "/var/www/www.somedomain.de" # TODO customize
     deploy_dir: "{{base_dir}}/deploy"
     webroot: "{{base_dir}}/releases/{{version}}"
-    sulu_storage: "/PUTPATHHERE"
+    sulu_storage: "/PUTPATHHERE" # TODO customize
     workspace: "{{playbook_dir}}/.."
   serial: 1
   roles: []
@@ -79,7 +79,6 @@
           - "--exclude=deptrac.phar"
           - "--exclude=depfile.yml"
           - "--exclude=.php-cs-fixer.dist.php"
-          - "--exclude=mysql-tunnel.sh"
           - "--exclude=package.json"
           - "--exclude=package-lock.json"
           - "--exclude=phpstan.neon"
@@ -141,16 +140,13 @@
         cd {{webroot}}/ 
         php bin/console assets:install
 
-    - name: set permissions
+    - name: set permissions # TODO customize
       shell: |
         cd {{webroot}}/
-        mkdir public/mollie-icons
-        chown -Rf banana:webrights *
+        chown -Rf YOURUSER:YOURGROUP *
         chmod -Rf 775 *
-        setfacl -dR -m u:www-data:rwX -m u:banana:rwX var
-        setfacl -R -m u:www-data:rwX -m u:banana:rwX var
-        setfacl -dR -m u:www-data:rwX -m u:banana:rwX public/mollie-icons
-        setfacl -R -m u:www-data:rwX -m u:banana:rwX public/mollie-icons
+        setfacl -dR -m u:www-data:rwX -m u:YOURUSER:rwX var
+        setfacl -R -m u:www-data:rwX -m u:YOURUSER:rwX var
 
   post_tasks:
     - name: tidy up old releases
