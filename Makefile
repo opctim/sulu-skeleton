@@ -32,7 +32,7 @@ setup: # Initial project setup
 	make composer-install
 	make init-db
 	make init-frontend
-	@echo "Done. You can login at https://$NGINX_BACKEND_DOMAIN/admin with user admin/admin"
+	@echo "Done. You can login at https://${NGINX_BACKEND_DOMAIN}/admin with user admin/admin"
 
 .PHONY: help
 help: # Show help for this make file
