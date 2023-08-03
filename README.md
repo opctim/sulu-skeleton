@@ -1,8 +1,6 @@
 Sulu Skeleton
 ==============
 
----
-
 ## Features
 
 - PHP 8.2
