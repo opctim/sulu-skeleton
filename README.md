@@ -1,6 +1,8 @@
 Sulu Skeleton
 ==============
 
+This Sulu CMS skeleton is the perfect way to decrease your initial setup time drastically!
+
 ## Features
 
 - PHP 8.2
