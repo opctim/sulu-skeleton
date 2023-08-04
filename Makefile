@@ -7,7 +7,7 @@ deploy: # Invokes the ansible playbook to deploy your application to a remote ho
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -v -i ansible/hosts -e 'version=${shell date +"%Y%m%d%H%M%S"}' -e 'build_frontend=${BUILD_FRONTEND}' ansible/deploy-prod.yml
 
 init-db: # Initializes the database and adds an admin user (User: admin Password: admin)
-	docker-compose exec php bin/console doctrine:schema:update --force
+	docker-compose exec php bash -c "yes | bin/adminconsole sulu:build dev"
 	docker-compose exec php bin/adminconsole sulu:document:initialize
 	- docker-compose exec php bin/console sulu:security:role:create User Sulu
 	- docker-compose exec php bin/console sulu:security:user:create admin Adam Ministrator admin@example.com en User admin

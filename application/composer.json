@@ -45,7 +45,7 @@
         "scheb/2fa-trusted-device": "^6.1",
         "sensio/framework-extra-bundle": "*",
         "sulu/form-bundle": "~2.5.2",
-        "sulu/sulu": "~2.5.5",
+        "sulu/sulu": "2.5.10",
         "symfony/config": "^6.0",
         "symfony/dotenv": "^6.0",
         "symfony/flex": "^1.17 || ^2.0",
