@@ -1,0 +1,10 @@
+sulu_core:
+    locales:
+        en: English
+        de: Deutsch
+
+    translations:
+        - en
+        - de
+
+    fallback_locale: '%default_locale%'

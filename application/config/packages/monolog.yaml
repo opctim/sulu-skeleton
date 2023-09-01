@@ -41,27 +41,11 @@ when@prod: &prod
     monolog:
         handlers:
             main:
-                type: fingers_crossed
-                handler: grouped
-                excluded_http_codes: [403, 404, 401]
-            grouped:
-                type: group
-                members: [ streamed, deduplicated ]
-            streamed:
                 type: rotating_file
                 path: '%kernel.logs_dir%/%kernel.environment%.log'
-                level: info
+                level: debug
+                # max number of log files to keep
+                # defaults to zero, which means infinite files
                 max_files: 10
-            deduplicated:
-                type: deduplication
-                handler: symfony_mailer
-            symfony_mailer:
-                type: symfony_mailer
-                from_email: '%env(MAIL_SENDER_ADDRESS)%'
-                to_email: '%env(SULU_ADMIN_EMAIL)%'
-                subject: 'An Error Occurred! %%message%%'
-                level: emergency
-                formatter: monolog.formatter.html
-                content_type: text/html
 
 when@stage: *prod
