@@ -28,6 +28,8 @@ services:
     nginx:
         build:
             context: .docker/nginx
+            args:
+                NGINX_BACKEND_DOMAIN: ${NGINX_BACKEND_DOMAIN}
         volumes:
             - ./application:/var/www/symfony/
         ports:
