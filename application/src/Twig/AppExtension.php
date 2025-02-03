@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twig;
 
 use App\Service\PreloadService;
 use Psr\Container\ContainerInterface;
-use Sulu\Bundle\MediaBundle\Api\Media;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
@@ -12,15 +13,10 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
-    private ContainerInterface $container;
-    private ParameterBagInterface $parameterBag;
-
     public function __construct(
-        ContainerInterface $container,
-        ParameterBagInterface $parameterBag
+        private readonly ContainerInterface $container,
+        private readonly ParameterBagInterface $parameterBag,
     ) {
-        $this->container = $container;
-        $this->parameterBag = $parameterBag;
     }
 
     public function getFunctions(): array
@@ -28,8 +24,8 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
         return [
             new TwigFunction('is_string', 'is_string'),
             new TwigFunction('uniqid', 'uniqid'),
-            new TwigFunction('preload_image', [$this, 'preloadImage']),
-            new TwigFunction('preload_font', [$this, 'preloadFont']),
+            new TwigFunction('preload_image', fn ($args): string => $this->preloadImage($args)),
+            new TwigFunction('preload_font', fn ($args): string => $this->preloadFont($args)),
         ];
     }
 
@@ -52,6 +48,7 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
 
         return '';
     }
+
     public static function getSubscribedServices(): array
     {
         return [

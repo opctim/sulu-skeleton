@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,21 +13,18 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 
 class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
 {
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
     {
-        $this->urlGenerator = $urlGenerator;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
-        if (!preg_match('/^\/(admin)/', $request->getPathInfo())) {
-            return new Response('Unauthorized.', 401);
+        if (!\preg_match('/^\/(admin)/', $request->getPathInfo())) {
+            return new Response('Unauthorized.', Response::HTTP_UNAUTHORIZED);
         }
 
         return new RedirectResponse(
-            $this->urlGenerator->generate('sulu_admin')
+            $this->urlGenerator->generate('sulu_admin'),
         );
     }
 }

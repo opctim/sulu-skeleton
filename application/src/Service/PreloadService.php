@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Sulu\Bundle\MediaBundle\Api\Media;
@@ -17,7 +19,9 @@ class PreloadService
      */
     private array $fonts = [];
 
-    public function __construct(private readonly UserAgentService $userAgentService) {}
+    public function __construct(private readonly UserAgentService $userAgentService)
+    {
+    }
 
     /**
      * @return string[]
@@ -26,10 +30,9 @@ class PreloadService
     {
         $result = [];
 
-        foreach ($this->images as [ $image, $formats ]) {
+        foreach ($this->images as [$image, $formats]) {
             /** @var Media $image */
             /** @var array<string, string>[] $formats */
-
             $format = $this->getFormat($formats);
 
             $result[] = $image->getFormats()[$format] ?? $image->getUrl();
@@ -42,17 +45,17 @@ class PreloadService
     {
         $format = 'sm';
 
-        if ($this->userAgentService->isiPadOS() ||  $this->userAgentService->isiPad()) {
+        if ($this->userAgentService->isiPadOS() || $this->userAgentService->isiPad()) {
             $format = 'lg';
-        } else if ($this->userAgentService->isTablet()) {
+        } elseif ($this->userAgentService->isTablet()) {
             $format = 'md';
-        } else if ($this->userAgentService->isDesktop() || $this->userAgentService->isDesktopMode()) {
+        } elseif ($this->userAgentService->isDesktop() || $this->userAgentService->isDesktopMode()) {
             $format = 'xl';
         }
 
         $bestFormat = $this->findBestFormat($format, $formats);
 
-        if ($bestFormat && !preg_match('/\.\w+$/', $bestFormat)) {
+        if ($bestFormat && !\preg_match('/\.\w+$/', $bestFormat)) {
             $bestFormat .= '.webp';
         }
 
@@ -82,34 +85,20 @@ class PreloadService
             return $result;
         }
 
-        // if nothing found, do the same in reverse...
-
-        switch ($format) {
-            case 'xl':
-                $result = $formats['xl'] ?? $formats['lg'] ?? $formats['md'] ?? $formats['sm'] ?? null;
-                break;
-            case 'lg':
-                $result = $formats['lg'] ?? $formats['md'] ?? $formats['sm'] ?? null;
-                break;
-            case 'md':
-                $result = $formats['md'] ?? $formats['sm'] ?? null;
-                break;
-            case 'sm':
-                $result = $formats['sm'] ?? null;
-                break;
-        }
-
-        return $result;
+        return match ($format) {
+            'xl' => $formats['xl'] ?? $formats['lg'] ?? $formats['md'] ?? $formats['sm'] ?? null,
+            'lg' => $formats['lg'] ?? $formats['md'] ?? $formats['sm'] ?? null,
+            'md' => $formats['md'] ?? $formats['sm'] ?? null,
+            'sm' => $formats['sm'] ?? null,
+            default => $result,
+        };
     }
 
     public function addImage(Media $image, array $formats): void
     {
-        $this->images[] = [ $image, $formats ];
+        $this->images[] = [$image, $formats];
     }
 
-    /**
-     * @return array
-     */
     public function getFontUrls(): array
     {
         return $this->fonts;
@@ -122,12 +111,12 @@ class PreloadService
 
     public function addPreloadHeaders(Response $response): Response
     {
-        $linkHeaders = array_merge(
+        $linkHeaders = \array_merge(
             $this->getImageLinkHeaders(),
             $this->getFontLinkHeaders(),
         );
 
-        $response->headers->set('Link', [ implode(',', $linkHeaders) ], false);
+        $response->headers->set('Link', [\implode(',', $linkHeaders)], false);
 
         return $response;
     }

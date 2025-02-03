@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Jenssegers\Agent\Agent;
@@ -7,12 +9,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserAgentService extends Agent
 {
-    public function __construct(RequestStack $requestStack) {
+    public function __construct(RequestStack $requestStack)
+    {
         $request = $requestStack->getCurrentRequest();
 
         parent::__construct(
             $request->headers->all(),
-            $request->headers->get('User-Agent')
+            $request->headers->get('User-Agent'),
         );
     }
 }

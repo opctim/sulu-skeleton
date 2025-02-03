@@ -18,6 +18,12 @@ composer-install: # Performs a composer install inside the php container
 up: # Builds and starts the containers
 	docker-compose up -d --build
 
+down: # Stops & removes the containers
+	docker-compose down
+
+restart: # Downs & starts the containers
+	docker-compose down && docker-compose up -d
+
 bash: # Opens a shell inside the php container
 	docker-compose exec php bash
 

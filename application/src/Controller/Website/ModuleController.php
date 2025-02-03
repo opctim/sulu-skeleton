@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Website;
 
 use App\Service\PreloadService;
-use Sulu\Bundle\MediaBundle\Api\Media;
 use Sulu\Bundle\WebsiteBundle\Controller\DefaultController;
 use Sulu\Component\Content\Compat\StructureInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ModuleController extends DefaultController
@@ -16,12 +16,12 @@ class ModuleController extends DefaultController
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         // enforcing the format so the bad guys can fuck off
-        if ($request->getRequestFormat() !== 'html') {
-            return new Response('', 404);
+        if ('html' !== $request->getRequestFormat()) {
+            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         return $this->addPreloadHeaders(
-            parent::indexAction($structure, $preview, $partial)
+            parent::indexAction($structure, $preview, $partial),
         );
     }
 
@@ -37,7 +37,7 @@ class ModuleController extends DefaultController
     {
         return [
             ...parent::getSubscribedServices(),
-            PreloadService::class
+            PreloadService::class,
         ];
     }
 }
