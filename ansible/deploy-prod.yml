@@ -7,14 +7,14 @@
   tasks:
     - name: set configuration file
       shell: |
-        cd {{workspace}}/application
+        cd {{workspace}}
         mv .env.prod env
         rm -rf .env*
         mv env .env
 
     - name: build backend on localhost (composer install)
       shell: |
-        cd {{workspace}}/application
+        cd {{workspace}}
         composer install --no-scripts
 
     - name: build frontend on localhost
@@ -23,7 +23,7 @@
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-        cd {{workspace}}/application
+        cd {{workspace}}
         nvm install
         npm ci
         npm run build
@@ -35,7 +35,7 @@
 
     - name: decrypt secrets to local vault
       shell: |
-        cd {{workspace}}/application
+        cd {{workspace}}
         APP_RUNTIME_ENV=prod php bin/console secrets:decrypt-to-local --force
 
 
@@ -63,7 +63,7 @@
 
     - name: transfer data to server
       synchronize:
-        src: "../application/"
+        src: "../"
         dest: "{{deploy_dir}}"
         checksum: yes
         delete: yes
@@ -71,6 +71,11 @@
         rsync_opts:
           - "--exclude=*DS_Store"
           - "--exclude=*.git/"
+          - "--exclude=compose*"
+          - "--exclude=rector.php"
+          - "--exclude=Dockerfile"
+          - "--exclude=xdebug-cli-snippet.txt"
+          - "--exclude=.nvmrc"
           - "--exclude=*/node_modules/"
           - "--exclude=var/cache/"
           - "--exclude=config/secrets/dev/"

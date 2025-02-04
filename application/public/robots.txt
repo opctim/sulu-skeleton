@@ -1,4 +1,0 @@
-User-Agent: *
-Disallow: /checkout
-
-Sitemap: /sitemap.xml
