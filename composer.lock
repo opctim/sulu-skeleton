@@ -4862,16 +4862,16 @@
         },
         {
             "name": "opctim/symfony-csp-bundle",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opctim/symfony-csp-bundle.git",
-                "reference": "16f5e31afeaaba633116fc18481d218c0ca6216e"
+                "reference": "7e171647e579fc1a26424fe009f6f5a011848008"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opctim/symfony-csp-bundle/zipball/16f5e31afeaaba633116fc18481d218c0ca6216e",
-                "reference": "16f5e31afeaaba633116fc18481d218c0ca6216e",
+                "url": "https://api.github.com/repos/opctim/symfony-csp-bundle/zipball/7e171647e579fc1a26424fe009f6f5a011848008",
+                "reference": "7e171647e579fc1a26424fe009f6f5a011848008",
                 "shasum": ""
             },
             "require": {
@@ -4915,9 +4915,9 @@
             "description": "This bundle helps to properly secure your application using the CSP header in a symfony application.",
             "support": {
                 "issues": "https://github.com/opctim/symfony-csp-bundle/issues",
-                "source": "https://github.com/opctim/symfony-csp-bundle/tree/1.1.4"
+                "source": "https://github.com/opctim/symfony-csp-bundle/tree/1.1.5"
             },
-            "time": "2024-05-06T14:10:03+00:00"
+            "time": "2025-02-04T16:43:25+00:00"
         },
         {
             "name": "oro/doctrine-extensions",
