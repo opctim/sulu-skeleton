@@ -24,6 +24,7 @@ bash: # Opens a shell inside the php container
 
 setup: # Initial project setup
 	make up
+	make composer-install
 	make init
 	@echo "Done. You can login at https://${NGINX_BACKEND_DOMAIN}/admin with user admin/admin"
 
